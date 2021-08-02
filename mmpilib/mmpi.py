@@ -24,11 +24,25 @@ a complete questionnaire.
 import time
 import matplotlib.pyplot as plt
 from openpyxl import Workbook
-from openpyxl.compat import range
+#from openpyxl.compat import range #comment because of not use
 from openpyxl.styles import Font, Alignment
 
 # for debug
 from random import randint
+
+#通过修改FORMAT_INPUT的值(0或1)可以做到是否手动填写，text_input则为题目，通过修改为(1或0)来选择是或否
+#format input
+FORMAT_INPUT = 1
+text_input = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #60
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #120
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #180
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #240
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #300
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #360
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #420
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #480
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, #540
+              0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0] #600
 
 # 指导语
 # Instruction
@@ -648,29 +662,20 @@ def start():
     :return: None
     """
     print(Ins1)
-    time.sleep(5)
+    time.sleep(1)
 
     while 1:
-        print('接下来将开始测验，是否开始？')
-        print('1. 是    0. 否')
-        go = input('> ')
+        go = '1'
         if go == '1':
             print('-' * 65)
-            print('测验将在30秒后正式开始，请仔细阅读并理解以下内容')
-            time.sleep(3)
+            print('测验将在5秒后正式开始，请仔细阅读并理解以下内容')
+            time.sleep(2)
             print(Ins2)
-            time.sleep(27)
-            break
-        elif go == '0':
-            print('感谢使用本程序，再见！')
             time.sleep(3)
-            exit(0)
-        else:
-            print('输入错误请按照测验要求重新输入！')
-            continue
+            break
 
 
-def answer():
+def answer(i):
     """for debug
     随机答题
     random answer
@@ -678,7 +683,7 @@ def answer():
     :return: '0' or '1'
     :rtype: str
     """
-    ans = randint(0, 1)
+    ans = text_input[i]
     return str(ans)
 
 
@@ -694,7 +699,7 @@ def test():
 
     print('测验正式开始！')
     print('-' * 65)
-    time.sleep(3)
+    time.sleep(1)
 
     while 1:
         print('x1. 我的性别是')
@@ -710,7 +715,7 @@ def test():
         print('-' * 65)
         print('x2. 请输入你的年龄')
         Age = input('> ')
-
+    
         if str.isdigit(Age):
             if 13 <= int(Age) <= 70:
                 break
@@ -737,8 +742,12 @@ def test():
             print('-' * 65)
             print(temp_que)
             print('1. 是    0. 否')
-            temp_ans = input('> ')
-            # temp_ans = answer()  # for debug
+            if FORMAT_INPUT:
+                temp_ans = answer(i)
+            else:
+                temp_ans = input('> ')
+            
+            #   # for debug
             # print('> ' + str(temp_ans))  # for debug
             if temp_ans == '1' or temp_ans == '0':
                 Ans[i+1] = temp_ans
@@ -956,7 +965,7 @@ def scale_q(ori_score=0, pro_score=0):
     the score of Q (? or question) scale,
 
     由于不允许被试者存在空题，故仅记录16项重复问题的矛盾数量
-    because subjects were not allowed to have blank questions,
+    because subjects were not allowed to have blank questions,gh repo clone Bright476/MMPI_Test
     just record the number of contradictions of 16 repeated questions
 
     :param ori_score: original score
@@ -1550,7 +1559,7 @@ def analyze_score():
     cli_list[cli_max1_index] = cli_max1
     two_point = '%s%s' % (str(first), str(second))
 
-    plt.rcParams['font.sans-serif'] = ['SimHei']
+    plt.rcParams['font.sans-serif'] = ['DejaVu Sans']
     plt.rcParams['axes.unicode_minus'] = False
     fig = plt.figure(figsize=(10, 6), dpi=100, linewidth=1)
     ax = fig.add_subplot(111)
@@ -1560,9 +1569,9 @@ def analyze_score():
     # plt.setp(ax.xaxis.get_majorticklabels(), rotation=-45)
     ax.set_xticks(range(len(val_list + cli_list + ext_list)))
     ax.set_xticklabels(val_scale + cli_scale + ext_scale)
-    ax.set_yticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120])
+    ax.set_yticks([0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140])
     ax.set_xlim(-0.5, len(val_scale + cli_scale + ext_scale) - 0.5)
-    ax.set_ylim(0, 120)
+    ax.set_ylim(0, 140)
     plt.axvline(2.5, ls="-", color="black")
     plt.axvline(12.5, ls="-", color="black")
     plt.axvline(7, ls="--", color="red")
@@ -1584,7 +1593,7 @@ def data_export():
 
     Note: Generate a '.xlsx' file to save the test information
     """
-    print('请输入被试者姓名')
+    print('请输入被试者姓名，请不要输入中文')
     name = input('> ')
     wb = Workbook()
     data_filename = time.strftime("%Y%m%d_%H%M_", time.localtime()) + name + '_MMPI测验'
@@ -1734,5 +1743,5 @@ def data_export():
     sheet2['F2'].alignment = alig1
 
     wb.save(filename=data_filename + '.xlsx')
-    plt.title('%s MMPI剖析图 加K分校正T分（中国常模）' % name)
+    plt.title('%s MMPI Add K score to matrix T score (Chinese norm)' % name)
     plt.savefig(data_filename)
